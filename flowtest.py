@@ -1,20 +1,29 @@
-GREEN_LED = 18
-RED_LED = 23
-GPIO.setup(GREEN_LED, GPIO.OUT)
-GPIO.setup(RED_LED, GPIO.OUT)
+#!/usr/bin/env python
 
-try:
-
-    flag = True
-    while True:
-        if flag:
-            GPIO.output(GREEN_LED, True)
-            GPIO.output(RED_LED, False)
-            flag = False
-        else:
-            GPIO.output(GREEN_LED, False)
-            GPIO.output(RED_LED, True)
-            flag = True
+import RPi.GPIO as GPIO
+import time, sys
 
 
+FLOW_SENSOR = 23
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(FLOW_SENSOR, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+
+global count
+count = 0
+
+def countPulse(channel):
+   global count
+   count = count+1
+   print count
+
+GPIO.add_event_detect(FLOW_SENSOR, GPIO.RISING, callback=countPulse)
+
+
+while True:
+    try:
         time.sleep(1)
+    except KeyboardInterrupt:
+        print '\ncaught keyboard interrupt!, bye'
+        GPIO.cleanup()
+        sys.exit()
