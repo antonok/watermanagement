@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+# a simple test script to bench test water flow sensor
+
 import RPi.GPIO as GPIO
 import time, sys
 
