@@ -1,12 +1,14 @@
-#!/usr/bin/env python
+import os
+import time
 
-import os, time
 from datetime import datetime
 from daemon import runner
-from flowtimer import *
 
-class FlowD():
 
+import logging
+
+
+class App():
 
     def __init__(self):
         self.stdin_path = '/dev/null'
@@ -16,14 +18,29 @@ class FlowD():
         self.pidfile_timeout = 5
 
     def run(self):
-
-        print '%s flowd started' % datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-        
+        logger.info("start run()")
+        filepath = '/tmp/mydaemon/currenttime.txt'
+        dirpath = os.path.dirname(filepath)
         while True:
-            print '%s flowd is running' % datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-            time.sleep(5)
+            if not os.path.exists(dirpath) or not os.path.isdir(dirpath):
+                os.makedirs(dirpath)
+            f = open(filepath, 'a')
+            f.write(datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S') + "\n")
+            print datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+
+            logger.info(datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'))
+            f.close()
+            time.sleep(1)
+
+        logger.info("end run()")
 
 
-app = FlowD()
+app = App()
+
+
+logger = logging.getLogger("DaemonLog")
+logger.setLevel(logging.INFO)
+logger.addHandler(logging.StreamHandler())
+
 daemon_runner = runner.DaemonRunner(app)
 daemon_runner.do_action()
