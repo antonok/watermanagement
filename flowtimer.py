@@ -2,6 +2,8 @@
 
 
 import sys
+import atexit
+
 sys.path.append("modules")
 
 import RPi.GPIO as GPIO
@@ -22,11 +24,19 @@ def countPulse(channel):
 
 GPIO.add_event_detect(FLOW_SENSOR, GPIO.RISING, callback=countPulse)
 
+def cleanup():
+    print 'ok, I will clean up gpio now'
+    GPIO.cleanup()
 
-while True:
-    try:
-        time.sleep(1)
-    except KeyboardInterrupt:
-        print '\ncaught keyboard interrupt!, bye'
-        GPIO.cleanup()
-        sys.exit()
+atexit.register(cleanup)
+
+
+def main():
+    while True:
+        try:
+            time.sleep(1)
+        except KeyboardInterrupt:
+            sys.exit()
+
+if __name__ == "__main__":
+    main()
