@@ -24,7 +24,7 @@ class App():
     def run(self):
         logger.info("start run()")
 
-        self.fc = FlowCounter(0.45, 200)
+        self.fc = FlowCounter(float (1) / 450, 200)
 
         while True:
             #do a heartbeat or something to indicate that we are still alive
