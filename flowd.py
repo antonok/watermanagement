@@ -7,6 +7,8 @@ from daemon import runner
 
 import logging
 
+import flowtimer
+
 
 class App():
 
@@ -19,17 +21,10 @@ class App():
 
     def run(self):
         logger.info("start run()")
-        filepath = '/tmp/mydaemon/currenttime.txt'
-        dirpath = os.path.dirname(filepath)
-        while True:
-            if not os.path.exists(dirpath) or not os.path.isdir(dirpath):
-                os.makedirs(dirpath)
-            f = open(filepath, 'a')
-            f.write(datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S') + "\n")
-            print datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
 
-            logger.info(datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'))
-            f.close()
+        while True:
+            #do a heartbeat or something to indicate that we are still alive
+            #logger.info('via logger '+ datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'))
             time.sleep(1)
 
         logger.info("end run()")
