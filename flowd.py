@@ -1,13 +1,15 @@
 import os
+import sys
 import time
 
 from datetime import datetime
 from daemon import runner
-
-
 import logging
 
-import flowtimer
+sys.path.append("modules")
+from flowcounter import FlowCounter
+
+#import flowtimer
 
 
 class App():
@@ -22,6 +24,8 @@ class App():
     def run(self):
         logger.info("start run()")
 
+        self.fc = FlowCounter(0.45, 200)
+
         while True:
             #do a heartbeat or something to indicate that we are still alive
             #logger.info('via logger '+ datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'))
@@ -33,7 +37,8 @@ class App():
 app = App()
 
 
-logger = logging.getLogger("DaemonLog")
+#logger = logging.getLogger("DaemonLog")
+logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
 
