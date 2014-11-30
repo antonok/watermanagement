@@ -71,7 +71,8 @@ class FlowCounter:
             self.lastTs = 0
 
     def logToFile(self, msg):
-        filepath = '/tmp/flowd/log.txt'
+        #filepath = '/tmp/flowd/log.txt'
+        filepath = '/var/lib/flowd/log.txt'
         dirpath = os.path.dirname(filepath)
 
         if not os.path.exists(dirpath) or not os.path.isdir(dirpath):

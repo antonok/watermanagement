@@ -17,10 +17,11 @@ FLOW_SENSOR = 23
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(FLOW_SENSOR, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-fc = FlowCounter(0.45, 200)
+#fc = FlowCounter(0.45, 200)
 
 def countPulse(channel):
-    fc.countPulse()
+    print "count pulse"
+    #fc.countPulse()
 
 GPIO.add_event_detect(FLOW_SENSOR, GPIO.RISING, callback=countPulse)
 
