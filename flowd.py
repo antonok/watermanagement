@@ -6,11 +6,8 @@ from datetime import datetime
 from daemon import runner
 import logging
 
-sys.path.append("modules")
+sys.path.append(os.path.join(os.path.dirname(sys.argv[0]), "modules"))
 from flowcounter import FlowCounter
-
-#import flowtimer
-
 
 class App():
 
@@ -37,7 +34,6 @@ class App():
 app = App()
 
 
-#logger = logging.getLogger("DaemonLog")
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logger.addHandler(logging.StreamHandler())
