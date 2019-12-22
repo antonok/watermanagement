@@ -1,2 +1,2 @@
 rpi.gpio
-plotly
+python-daemon==2.2.4
